@@ -103,6 +103,7 @@ Szczegółowe instrukcje użytkowania i konfiguracji można znaleźć w [dokumen
 - **Modele 3D**: Pliki VRM (obsługuje kontrolę pozy i gestów za pomocą tagów ruchu)
 - **Modele 2D**: Pliki Live2D (Cubism 3 i nowsze)
 - **Motion PNGTuber**: Wyświetlanie postaci oparte na wideo ([MotionPNGTuber](https://github.com/rotejin/MotionPNGTuber))
+- **Modele LivLiv** (`.livliv`) są renderowane przez [LivLiv Player](https://github.com/livliv-dev/player).
 
 ### Obsługiwane LLM
 

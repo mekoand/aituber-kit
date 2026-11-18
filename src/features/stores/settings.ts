@@ -228,6 +228,7 @@ interface Character {
   poseAdjustMode: boolean
   selectedPNGTuberPath: string
   selectedLivlivPath: string
+  showLivlivWatermark: boolean
   pngTuberSensitivity: number
   pngTuberChromaKeyEnabled: boolean
   pngTuberChromaKeyColor: string
@@ -731,6 +732,8 @@ const getInitialValuesFromEnv = (): SettingsState => ({
     ? process.env.NEXT_PUBLIC_MODEL_TYPE
     : 'vrm',
   selectedLivlivPath: process.env.NEXT_PUBLIC_SELECTED_LIVLIV_PATH || '',
+  showLivlivWatermark:
+    process.env.NEXT_PUBLIC_SHOW_LIVLIV_WATERMARK !== 'false',
   selectedPNGTuberPath:
     process.env.NEXT_PUBLIC_SELECTED_PNGTUBER_PATH || '/pngtuber/nike01',
   pngTuberSensitivity:
@@ -1327,6 +1330,7 @@ export const selectPersistedSettings = (state: SettingsState) => ({
   screenLightingStrength: state.screenLightingStrength,
   modelType: state.modelType,
   selectedLivlivPath: state.selectedLivlivPath,
+  showLivlivWatermark: state.showLivlivWatermark,
   selectedPNGTuberPath: state.selectedPNGTuberPath,
   pngTuberSensitivity: state.pngTuberSensitivity,
   pngTuberChromaKeyEnabled: state.pngTuberChromaKeyEnabled,

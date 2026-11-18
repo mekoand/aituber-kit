@@ -510,6 +510,19 @@
     "LoadingModel": "Đang tải mô hình Live2D...",
     "SelectEmotions": "Chọn cảm xúc"
   },
+  "LivLiv": {
+    "RendererInfo": "Mô hình LivLiv được kết xuất bằng <player/>.",
+    "FileInfo": "Tệp đã mở được lưu trong trình duyệt này.",
+    "OpenModel": "Mở .livliv",
+    "ChooseModel": "Chọn mô hình",
+    "NoModel": "Chọn mô hình hoặc kéo tệp .livliv vào đây.",
+    "Characters": "Nhân vật LivLiv",
+    "ShowSampleWatermark": "Hiện hình mờ của mẫu",
+    "WebGLUnsupported": "Cần WebGL 2 để hiển thị mô hình LivLiv.",
+    "LoadError": "Không tải được mô hình LivLiv.",
+    "ImportError": "Không mở được tệp .livliv.",
+    "ListError": "Không tải được danh sách mô hình LivLiv."
+  },
   "PNGTuber": {
     "FileInfo": "Vui lòng đặt thư mục asset PNGTuber bạn muốn sử dụng trong public/pngtuber. Đảm bảo tệp config.json và hình ảnh PNG nằm trực tiếp trong thư mục này.\nNếu không xuất hiện trong các tùy chọn, hãy tải lại trang hoặc kiểm tra đường dẫn thư mục có chính xác không.",
     "Sensitivity": "Độ nhạy",

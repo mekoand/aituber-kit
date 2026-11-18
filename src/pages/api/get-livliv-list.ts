@@ -7,14 +7,11 @@ import assetManifest from '@/constants/assetManifest.json'
 import { withAccessPolicy } from '@/lib/accessPolicy/withAccessPolicy'
 import { routePolicies } from '@/lib/accessPolicy/routePolicies'
 
-export type LivLivModelEntry = {
-  path: string
-  name: string
-}
+import type { LivLivModelEntry } from '@/features/livliv/models'
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(_req: NextApiRequest, res: NextApiResponse) {
   if (isRestrictedMode()) {
-    return res.status(200).json(assetManifest.livliv ?? [])
+    return res.status(200).json(assetManifest.livliv)
   }
 
   const livlivDir = path.join(process.cwd(), 'public/livliv')
@@ -33,7 +30,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       if (entry.name.startsWith('.')) continue
       if (entry.isFile() && entry.name.toLowerCase().endsWith('.livliv')) {
         models.push({
-          path: `/livliv/${entry.name}`,
+          path: `/livliv/${encodeURIComponent(entry.name)}`,
           name: entry.name.replace(/\.livliv$/i, ''),
         })
         continue
@@ -42,7 +39,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const manifestPath = path.join(livlivDir, entry.name, 'model.json')
       if (fs.existsSync(manifestPath)) {
         models.push({
-          path: `/livliv/${entry.name}/`,
+          path: `/livliv/${encodeURIComponent(entry.name)}/`,
           name: entry.name,
         })
       }

@@ -5,13 +5,12 @@ import { useTranslation } from 'react-i18next'
 import homeStore from '@/features/stores/home'
 import menuStore from '@/features/stores/menu'
 import settingsStore, { SettingsState } from '@/features/stores/settings'
-import { uploadLivlivFile } from '@/features/livliv/uploadLivlivFile'
-import toastStore from '@/features/stores/toast'
 import { TextButton } from '../../textButton'
 import { ToggleSwitch } from '../../toggleSwitch'
 import { useLive2DEnabled } from '@/hooks/useLive2DEnabled'
 import { useRestrictedMode } from '@/hooks/useRestrictedMode'
 import { Live2DSettingsForm } from './Live2DSettingsForm'
+import { LivLivModelSettings } from './LivLivModelSettings'
 import { settingsControlClass } from '@/components/settings/formStyles'
 
 interface CharacterModelSectionProps {
@@ -19,7 +18,6 @@ interface CharacterModelSectionProps {
   selectedVrmPath: string
   selectedLive2DPath: string
   selectedPNGTuberPath: string
-  selectedLivlivPath: string
   pngTuberSensitivity: number
   pngTuberChromaKeyEnabled: boolean
   pngTuberChromaKeyColor: string
@@ -31,7 +29,6 @@ export const CharacterModelSection = ({
   selectedVrmPath,
   selectedLive2DPath,
   selectedPNGTuberPath,
-  selectedLivlivPath,
   pngTuberSensitivity,
   pngTuberChromaKeyEnabled,
   pngTuberChromaKeyColor,
@@ -46,9 +43,6 @@ export const CharacterModelSection = ({
   >([])
   const [pngTuberModels, setPngTuberModels] = useState<
     Array<{ path: string; name: string; videoFile?: string }>
-  >([])
-  const [livlivModels, setLivlivModels] = useState<
-    Array<{ path: string; name: string }>
   >([])
 
   // クロマキー用動画プレビュー
@@ -127,38 +121,7 @@ export const CharacterModelSection = ({
       .catch((error) => {
         logger.error('Error fetching PNGTuber list:', error)
       })
-
-    fetch('/api/get-livliv-list')
-      .then((res) => res.json())
-      .then((models) => setLivlivModels(models))
-      .catch((error) => {
-        logger.error('Error fetching LivLiv list:', error)
-      })
   }, [])
-
-  const refreshLivlivModels = () => {
-    fetch('/api/get-livliv-list')
-      .then((res) => res.json())
-      .then((models) => setLivlivModels(models))
-      .catch((error) => {
-        logger.error('Error fetching LivLiv list:', error)
-      })
-  }
-
-  const handleLivlivUpload = async (file: File) => {
-    try {
-      const uploadedPath = await uploadLivlivFile(file)
-      settingsStore.setState({ selectedLivlivPath: uploadedPath })
-      refreshLivlivModels()
-    } catch (error) {
-      logger.error('Error uploading LivLiv model:', error)
-      toastStore.getState().addToast({
-        message: t('LivLiv.LoadError'),
-        type: 'error',
-        tag: 'livliv-upload-error',
-      })
-    }
-  }
 
   const handleVrmUpload = async (file: File) => {
     const formData = new FormData()
@@ -312,61 +275,7 @@ export const CharacterModelSection = ({
         </>
       )}
 
-      {modelType === 'livliv' && (
-        <>
-          <div className="my-2 text-sm whitespace-pre-wrap">
-            {t('LivLiv.FileInfo')}
-          </div>
-          <div className="my-2 text-sm">
-            <a
-              href="https://github.com/livliv-dev/player"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              https://github.com/livliv-dev/player
-            </a>
-          </div>
-          <select
-            className={`${settingsControlClass.medium} mb-2`}
-            value={selectedLivlivPath}
-            onChange={(e) => {
-              settingsStore.setState({ selectedLivlivPath: e.target.value })
-            }}
-          >
-            <option value="">{t('LivLiv.NoModel')}</option>
-            {livlivModels.map((model) => (
-              <option key={model.path} value={model.path}>
-                {model.name}
-              </option>
-            ))}
-            {selectedLivlivPath &&
-              !livlivModels.some(
-                (model) => model.path === selectedLivlivPath
-              ) && (
-                <option value={selectedLivlivPath}>{selectedLivlivPath}</option>
-              )}
-          </select>
-          <div className="my-4">
-            <TextButton
-              onClick={() => {
-                const { fileInput } = menuStore.getState()
-                if (!fileInput) return
-                fileInput.accept = '.livliv'
-                fileInput.onchange = (event) => {
-                  const file = (event.target as HTMLInputElement).files?.[0]
-                  if (file) void handleLivlivUpload(file)
-                  fileInput.value = ''
-                }
-                fileInput.click()
-              }}
-              disabled={isRestrictedMode}
-            >
-              {t('LivLiv.OpenModel')}
-            </TextButton>
-          </div>
-        </>
-      )}
+      {modelType === 'livliv' && <LivLivModelSettings />}
 
       {modelType === 'pngtuber' && (
         <>

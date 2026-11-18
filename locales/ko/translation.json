@@ -510,6 +510,19 @@
     "LoadingModel": "Live2D 모델을 로드 중...",
     "SelectEmotions": "표정 선택"
   },
+  "LivLiv": {
+    "RendererInfo": "LivLiv 모델 렌더링에는 <player/>를 사용합니다.",
+    "FileInfo": "열어 본 파일은 이 브라우저에 저장됩니다.",
+    "OpenModel": ".livliv 파일 열기",
+    "ChooseModel": "모델 선택",
+    "NoModel": "모델을 선택하거나 .livliv 파일을 끌어다 놓으세요.",
+    "Characters": "LivLiv 캐릭터",
+    "ShowSampleWatermark": "샘플 워터마크 표시",
+    "WebGLUnsupported": "LivLiv 모델을 표시하려면 WebGL 2가 필요합니다.",
+    "LoadError": "LivLiv 모델을 불러올 수 없습니다.",
+    "ImportError": ".livliv 파일을 열 수 없습니다.",
+    "ListError": "LivLiv 모델 목록을 불러올 수 없습니다."
+  },
   "PNGTuber": {
     "FileInfo": "사용하고 싶은 PNGTuber 에셋 폴더를 public/pngtuber에 배치해주세요. 각 폴더에는 다음 파일이 필요합니다:\n• *_mouthless_h264.mp4(입 없는 배경 동영상)\n• mouth_track.json(입 위치 추적 데이터)\n• mouth/ 폴더(입 스프라이트: closed.png, open.png 필수, half.png, e.png, u.png 선택)",
     "Sensitivity": "감도",

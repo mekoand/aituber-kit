@@ -510,6 +510,19 @@
     "LoadingModel": "جاري تحميل نموذج Live2D...",
     "SelectEmotions": "اختيار التعبيرات"
   },
+  "LivLiv": {
+    "RendererInfo": "تُعرض نماذج LivLiv باستخدام <player/>.",
+    "FileInfo": "تُحفظ الملفات التي تفتحها في هذا المتصفح.",
+    "OpenModel": "فتح ملف .livliv",
+    "ChooseModel": "اختر نموذجًا",
+    "NoModel": "اختر نموذجًا أو اسحب ملف .livliv إلى هنا.",
+    "Characters": "شخصيات LivLiv",
+    "ShowSampleWatermark": "إظهار العلامة المائية للنماذج التجريبية",
+    "WebGLUnsupported": "يتطلب عرض نماذج LivLiv دعم WebGL 2.",
+    "LoadError": "تعذّر تحميل نموذج LivLiv.",
+    "ImportError": "تعذّر فتح ملف .livliv.",
+    "ListError": "تعذّر تحميل قائمة نماذج LivLiv."
+  },
   "PNGTuber": {
     "FileInfo": "يرجى وضع مجلد أصول PNGTuber الذي تريد استخدامه في public/pngtuber. تأكد من وجود ملف config.json وصور PNG مباشرة في هذا المجلد.\nإذا لم يظهر في الخيارات، يرجى إعادة تحميل الصفحة أو التحقق من صحة مسار المجلد.",
     "Sensitivity": "الحساسية",

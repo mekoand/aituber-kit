@@ -510,6 +510,19 @@
     "LoadingModel": "Caricamento modello Live2D...",
     "SelectEmotions": "Seleziona emozione"
   },
+  "LivLiv": {
+    "RendererInfo": "I modelli LivLiv vengono renderizzati con <player/>.",
+    "FileInfo": "I file aperti vengono salvati in questo browser.",
+    "OpenModel": "Apri .livliv",
+    "ChooseModel": "Scegli un modello",
+    "NoModel": "Scegli un modello o trascina qui un file .livliv.",
+    "Characters": "Personaggi LivLiv",
+    "ShowSampleWatermark": "Mostra la filigrana dei modelli di esempio",
+    "WebGLUnsupported": "Per visualizzare i modelli LivLiv serve WebGL 2.",
+    "LoadError": "Impossibile caricare il modello LivLiv.",
+    "ImportError": "Impossibile aprire il file .livliv.",
+    "ListError": "Impossibile caricare l’elenco dei modelli LivLiv."
+  },
   "PNGTuber": {
     "FileInfo": "Posiziona la cartella degli asset PNGTuber che desideri utilizzare in public/pngtuber. Assicurati che il file config.json e le immagini PNG si trovino direttamente in questa cartella.\nSe non appare nelle opzioni, ricarica la pagina o verifica che il percorso della cartella sia corretto.",
     "Sensitivity": "Sensibilità",

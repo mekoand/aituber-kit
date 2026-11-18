@@ -510,6 +510,19 @@
     "LoadingModel": "Loading Live2D model...",
     "SelectEmotions": "Select Emotion"
   },
+  "LivLiv": {
+    "RendererInfo": "LivLiv models are rendered by <player/>.",
+    "FileInfo": "Opened files are saved in this browser.",
+    "OpenModel": "Open .livliv",
+    "ChooseModel": "Choose a model",
+    "NoModel": "Choose a model or drop a .livliv file.",
+    "Characters": "LivLiv characters",
+    "ShowSampleWatermark": "Show sample watermark",
+    "WebGLUnsupported": "LivLiv models require WebGL 2.",
+    "LoadError": "Could not load the LivLiv model.",
+    "ImportError": "Could not open the .livliv file.",
+    "ListError": "Could not load the LivLiv model list."
+  },
   "PNGTuber": {
     "FileInfo": "Please place the PNGTuber asset folder you want to use in public/pngtuber. Each folder requires the following files:\n• *_mouthless_h264.mp4 (mouthless background video)\n• mouth_track.json (mouth position tracking data)\n• mouth/ folder (mouth sprites: closed.png, open.png are required, half.png, e.png, u.png are optional)",
     "Sensitivity": "Sensitivity",

@@ -103,6 +103,7 @@ For detailed usage and configuration instructions, please visit the [Documentati
 - **3D Models**: VRM files (supports pose and gesture control via motion tags)
 - **2D Models**: Live2D files (Cubism 3 and later)
 - **Motion PNGTuber**: Video-based character display ([MotionPNGTuber](https://github.com/rotejin/MotionPNGTuber))
+- **LivLiv models** (`.livliv`) are rendered by [LivLiv Player](https://github.com/livliv-dev/player).
 
 ### Supported LLMs
 

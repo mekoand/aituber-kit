@@ -283,6 +283,26 @@ function generateSlides() {
   return { folders: validFolders, supplements, rendered }
 }
 
+// --- LivLiv ---
+
+function generateLivlivList() {
+  return getTrackedFiles('livliv')
+    .flatMap((file) => {
+      const relative = file.slice('public/livliv/'.length)
+      const [name] = relative.split('/')
+      if (name.startsWith('.')) return []
+      const encoded = encodeURIComponent(name)
+      if (relative === name && /\.livliv$/i.test(name)) {
+        return [{ path: `/livliv/${encoded}`, name: name.slice(0, -7) }]
+      }
+      if (relative === `${name}/model.json`) {
+        return [{ path: `/livliv/${encoded}/`, name }]
+      }
+      return []
+    })
+    .sort((a, b) => a.name.localeCompare(b.name))
+}
+
 // --- メイン ---
 
 const manifest = {
@@ -290,6 +310,7 @@ const manifest = {
   backgrounds: generateBackgroundList(),
   live2d: generateLive2dList(),
   pngtuber: generatePngtuberList(),
+  livliv: generateLivlivList(),
   slides: generateSlides(),
 }
 
@@ -300,4 +321,5 @@ console.log(`  vrm: ${manifest.vrm.length} files`)
 console.log(`  backgrounds: ${manifest.backgrounds.length} files`)
 console.log(`  live2d: ${manifest.live2d.length} models`)
 console.log(`  pngtuber: ${manifest.pngtuber.length} models`)
+console.log(`  livliv: ${manifest.livliv.length} models`)
 console.log(`  slides: ${manifest.slides.folders.length} folders`)

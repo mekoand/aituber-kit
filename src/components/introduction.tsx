@@ -105,6 +105,19 @@ export const Introduction = () => {
               label={t('TechnologyIntroductionLink2')}
             />
             {t('TechnologyIntroductionDescription7')}
+            <p className="mt-2">
+              <Trans
+                i18nKey="LivLiv.RendererInfo"
+                components={{
+                  player: (
+                    <Link
+                      url="https://github.com/livliv-dev/player"
+                      label="LivLiv Player"
+                    />
+                  ),
+                }}
+              />
+            </p>
           </div>
           <div className="my-4 leading-relaxed">
             {t('SourceCodeDescription1')}

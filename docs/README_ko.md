@@ -103,6 +103,7 @@ AITuberKit은 누구나 쉽게 AI 캐릭터와 채팅할 수 있는 웹 애플�
 - **3D 모델**: VRM 파일(모션 태그를 통한 포즈 및 제스처 제어 지원)
 - **2D 모델**: Live2D 파일(Cubism 3 이상)
 - **모션 PNGTuber**: 동영상 기반 캐릭터 표시([MotionPNGTuber](https://github.com/rotejin/MotionPNGTuber))
+- **LivLiv 모델**(`.livliv`)은 [LivLiv Player](https://github.com/livliv-dev/player)로 렌더링합니다.
 
 ### 지원 LLM
 

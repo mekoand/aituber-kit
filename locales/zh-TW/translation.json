@@ -510,6 +510,19 @@
     "LoadingModel": "載入 Live2D 模型中...",
     "SelectEmotions": "選擇表情"
   },
+  "LivLiv": {
+    "RendererInfo": "LivLiv 模型由 <player/> 繪製。",
+    "FileInfo": "開啟的檔案會儲存在此瀏覽器中。",
+    "OpenModel": "開啟 .livliv",
+    "ChooseModel": "選擇模型",
+    "NoModel": "選擇模型或拖曳 .livliv 檔案到這裡。",
+    "Characters": "LivLiv 角色",
+    "ShowSampleWatermark": "顯示範例浮水印",
+    "WebGLUnsupported": "顯示 LivLiv 模型需要 WebGL 2。",
+    "LoadError": "無法載入 LivLiv 模型。",
+    "ImportError": "無法開啟 .livliv 檔案。",
+    "ListError": "無法載入 LivLiv 模型清單。"
+  },
   "PNGTuber": {
     "FileInfo": "請將要使用的PNGTuber資源資料夾放在public/pngtuber中。每個資料夾需要以下檔案：\n• *_mouthless_h264.mp4（無嘴背景影片）\n• mouth_track.json（嘴部位置追蹤資料）\n• mouth/資料夾（嘴部精靈圖：closed.png、open.png為必需，half.png、e.png、u.png為可選）",
     "Sensitivity": "靈敏度",

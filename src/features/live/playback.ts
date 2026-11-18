@@ -1,4 +1,5 @@
 import homeStore from '@/features/stores/home'
+import { setLivLivLiveVolume } from '@/features/livliv/mouthDriver'
 
 interface Live2DInternal {
   coreModel: {
@@ -75,6 +76,7 @@ export class LivePlayback {
         this.audio.paused || this.audio.muted ? 0 : Math.min(1, rms * 8)
       if (this.vrm) this.vrm.externalLipSyncVolume = this.volume
       this.png?.setExternalAudioLevel(this.volume)
+      setLivLivLiveVolume(this.volume)
       const speaking = this.volume > 0.02
       if (homeStore.getState().isSpeaking !== speaking)
         homeStore.setState({ isSpeaking: speaking })
@@ -95,6 +97,7 @@ export class LivePlayback {
     this.updateMouth()
     if (this.vrm) this.vrm.externalLipSyncVolume = null
     this.png?.setExternalAudioLevel(0)
+    setLivLivLiveVolume(null)
     this.audio.pause()
     this.audio.srcObject = null
     void this.context.close().catch(() => {})

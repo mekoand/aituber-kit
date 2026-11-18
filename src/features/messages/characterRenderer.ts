@@ -3,6 +3,7 @@ import settingsStore from '@/features/stores/settings'
 import { Talk } from './messages'
 import { Live2DHandler } from './live2dHandler'
 import { PNGTuberHandler } from '@/features/pngTuber/pngTuberHandler'
+import { livlivRenderer } from '@/features/livliv/livlivRuntime'
 
 export type PlaybackObserver = {
   onPlaybackStart?: () => void
@@ -60,35 +61,7 @@ export function getCharacterRenderer(): CharacterRenderer | null {
   }
 
   if (ss.modelType === 'livliv') {
-    return {
-      speak: async (buffer, talk, isNeedDecode, observer) => {
-        const { LivLivHandler } =
-          await import('@/features/livliv/livlivHandler')
-        return observer
-          ? LivLivHandler.speak(buffer, talk, isNeedDecode, observer)
-          : LivLivHandler.speak(buffer, talk, isNeedDecode)
-      },
-      speakPcm16Stream: async (stream, talk, sampleRate, observer) => {
-        const { LivLivHandler } =
-          await import('@/features/livliv/livlivHandler')
-        return LivLivHandler.speakPcm16Stream(
-          stream,
-          talk,
-          sampleRate,
-          observer
-        )
-      },
-      stopSpeaking: async () => {
-        const { LivLivHandler } =
-          await import('@/features/livliv/livlivHandler')
-        LivLivHandler.stopSpeaking()
-      },
-      resetToIdle: async () => {
-        const { LivLivHandler } =
-          await import('@/features/livliv/livlivHandler')
-        LivLivHandler.resetToIdle()
-      },
-    }
+    return livlivRenderer
   }
 
   const model = homeStore.getState().viewer.model

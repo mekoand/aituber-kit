@@ -510,6 +510,19 @@
     "LoadingModel": "กำลังโหลดโมเดล Live2D...",
     "SelectEmotions": "เลือกอารมณ์"
   },
+  "LivLiv": {
+    "RendererInfo": "โมเดล LivLiv เรนเดอร์ด้วย <player/>",
+    "FileInfo": "ไฟล์ที่เปิดจะถูกบันทึกไว้ในเบราว์เซอร์นี้",
+    "OpenModel": "เปิดไฟล์ .livliv",
+    "ChooseModel": "เลือกโมเดล",
+    "NoModel": "เลือกโมเดลหรือลากไฟล์ .livliv มาวางที่นี่",
+    "Characters": "ตัวละคร LivLiv",
+    "ShowSampleWatermark": "แสดงลายน้ำของโมเดลตัวอย่าง",
+    "WebGLUnsupported": "ต้องใช้ WebGL 2 เพื่อแสดงโมเดล LivLiv",
+    "LoadError": "โหลดโมเดล LivLiv ไม่สำเร็จ",
+    "ImportError": "เปิดไฟล์ .livliv ไม่สำเร็จ",
+    "ListError": "โหลดรายการโมเดล LivLiv ไม่สำเร็จ"
+  },
   "PNGTuber": {
     "FileInfo": "กรุณาวางโฟลเดอร์ asset ของ PNGTuber ที่ต้องการใช้ใน public/pngtuber ตรวจสอบว่าไฟล์ config.json และภาพ PNG อยู่ในโฟลเดอร์โดยตรง\nหากไม่ปรากฏในตัวเลือก กรุณาโหลดหน้าใหม่หรือตรวจสอบว่าพาธของโฟลเดอร์ถูกต้อง",
     "Sensitivity": "ความไว",

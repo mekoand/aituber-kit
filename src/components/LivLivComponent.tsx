@@ -1,175 +1,148 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import type { Player } from '@livliv-dev/player'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import ModelLoadingOverlay from '@/components/modelLoadingOverlay'
 import { reportViewerError } from '@/components/common/ErrorBoundary'
+import ModelLoadingOverlay from '@/components/modelLoadingOverlay'
 import {
-  attachLivLivSession,
-  cancelPendingLivLivAttach,
-  detachLivLivSession,
-  getLivLivSession,
-  LivLivSession,
-  LivLivWebGlUnsupportedError,
+  bindLivLivFace,
+  readLivLivVolume,
+  refreshLivLivExpression,
 } from '@/features/livliv/livlivRuntime'
-import { uploadLivlivFile } from '@/features/livliv/uploadLivlivFile'
-import { logger } from '@/lib/logger'
+import {
+  isHostedLivLivPackage,
+  reportLivLivModelError,
+  resolveLivLivModel,
+  selectLocalLivLivFile,
+} from '@/features/livliv/models'
+import { bindHostMouth } from '@/features/livliv/mouthDriver'
 import settingsStore from '@/features/stores/settings'
-import toastStore from '@/features/stores/toast'
-import { buildUrl } from '@/utils/buildUrl'
 
-type LivLivStageProps = {
+export default function LivLivComponent({
+  selectedPath,
+}: {
   selectedPath: string
-}
-
-function isLivlivFile(file: File): boolean {
-  return file.name.toLowerCase().endsWith('.livliv')
-}
-
-export default function LivLivComponent({ selectedPath }: LivLivStageProps) {
-  const { t, i18n } = useTranslation()
+}) {
+  const { t } = useTranslation()
+  const hideWatermark = settingsStore(
+    (state) => !state.showLivlivWatermark && isHostedLivLivPackage(selectedPath)
+  )
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const sessionRef = useRef<LivLivSession | null>(null)
-  const [canvasEpoch, setCanvasEpoch] = useState(0)
-  const [ready, setReady] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [unsupported, setUnsupported] = useState(false)
+  const [player, setPlayer] = useState<Player | null>(null)
+  const [canvasVersion, setCanvasVersion] = useState(0)
+  const [initError, setInitError] = useState<string | null>(null)
+  const [settled, setSettled] = useState<{
+    player: Player
+    path: string
+    hideWatermark: boolean
+  } | null>(null)
+  const hasModel = selectedPath !== ''
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || unsupported) return
+    if (!canvas || !hasModel) return
 
-    let alive = true
-    let session: LivLivSession | null = null
+    let cancelled = false
+    let mountedPlayer: Player | undefined
+    let unbindFace: (() => void) | undefined
 
-    void attachLivLivSession(canvas, i18n.language)
-      .then((created) => {
-        if (!created) return
-        if (!alive) {
-          detachLivLivSession(created)
-          return
+    void import('@livliv-dev/player')
+      .then(({ Player, LivLivError }) => {
+        if (cancelled) return
+
+        try {
+          const created = new Player(canvas, { followPointer: 'page' })
+          mountedPlayer = created
+          unbindFace = bindLivLivFace(created)
+          bindHostMouth(created, readLivLivVolume)
+          created.onContextLost = () => {
+            setPlayer(null)
+            setCanvasVersion((version) => version + 1)
+          }
+          setInitError(null)
+          setPlayer(created)
+        } catch (error) {
+          if (error instanceof LivLivError && error.code === 'no-webgl') {
+            setInitError('LivLiv.WebGLUnsupported')
+          } else {
+            throw error
+          }
         }
-        session = created
-        sessionRef.current = created
-        created.onContextLost = () => {
-          if (!alive) return
-          setReady(false)
-          setCanvasEpoch((epoch) => epoch + 1)
-        }
-        setReady(true)
       })
-      .catch((error: unknown) => {
-        if (!alive) return
-        if (error instanceof LivLivWebGlUnsupportedError) {
-          setUnsupported(true)
-          return
-        }
-        logger.error('Failed to start LivLiv Player:', error)
+      .catch((error) => {
+        if (cancelled) return
+        setInitError('Errors.ViewerRenderingError')
         reportViewerError('livliv-viewer', error)
       })
 
     return () => {
-      alive = false
-      setReady(false)
-      if (session) {
-        if (sessionRef.current === session) sessionRef.current = null
-        detachLivLivSession(session)
-      } else {
-        cancelPendingLivLivAttach()
-      }
+      cancelled = true
+      if (!mountedPlayer) return
+      unbindFace?.()
+      mountedPlayer.onContextLost = undefined
+      // StrictMode and deselection keep the canvas in the DOM for reuse.
+      mountedPlayer.dispose({ release: !canvas.isConnected })
+      if (canvas.isConnected) setPlayer(null)
     }
-  }, [canvasEpoch, i18n.language, unsupported])
+  }, [canvasVersion, hasModel])
 
   useEffect(() => {
-    if (!ready || !selectedPath) return
-    const session = getLivLivSession()
-    if (!session) return
+    if (!player || !selectedPath) return
 
-    let cancelled = false
-    const showLoading = window.setTimeout(() => {
-      if (!cancelled) setLoading(true)
-    }, 0)
-    session
-      .load(buildUrl(selectedPath))
-      .catch((error: unknown) => {
-        if (cancelled) return
-        logger.error('Failed to load LivLiv model:', error)
-        const detail = error instanceof Error ? error.message : ''
-        toastStore.getState().addToast({
-          message: detail
-            ? `${t('LivLiv.LoadError')} ${detail}`
-            : t('LivLiv.LoadError'),
-          type: 'error',
-          tag: 'livliv-load-error',
-        })
+    const controller = new AbortController()
+    const { signal } = controller
+    void resolveLivLivModel(selectedPath, hideWatermark, signal)
+      .then(async (source) => {
+        if (signal.aborted) return
+        const model = await player.load(source, { signal })
+        if (signal.aborted) return
+        player.view.fit = model.fullBody ? 'whole' : 'frame'
+        refreshLivLivExpression()
+      })
+      .catch((error) => {
+        if (!signal.aborted) reportLivLivModelError('LoadError', error)
       })
       .finally(() => {
-        if (!cancelled) setLoading(false)
+        if (!signal.aborted) {
+          setSettled({ player, path: selectedPath, hideWatermark })
+        }
       })
 
-    return () => {
-      cancelled = true
-      window.clearTimeout(showLoading)
-    }
-  }, [ready, selectedPath, t])
+    return () => controller.abort()
+  }, [player, selectedPath, hideWatermark])
 
-  const importFile = useCallback(
-    async (file: File) => {
-      if (!isLivlivFile(file)) return
-      setLoading(true)
-      try {
-        const uploadedPath = await uploadLivlivFile(file)
-        settingsStore.setState({ selectedLivlivPath: uploadedPath })
-      } catch (error) {
-        logger.error('Failed to import LivLiv model:', error)
-        toastStore.getState().addToast({
-          message: t('LivLiv.LoadError'),
-          type: 'error',
-          tag: 'livliv-upload-error',
-        })
-        setLoading(false)
-      }
-    },
-    [t]
-  )
-
-  const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault()
-      const file = event.dataTransfer.files?.[0]
-      if (file) void importFile(file)
-    },
-    [importFile]
-  )
-
-  if (unsupported) {
-    return (
-      <div className="flex h-full w-full items-center justify-center px-6 text-center">
-        <p className="max-w-md rounded-2xl bg-black/45 px-4 py-3 text-sm font-bold text-white">
-          {t('LivLiv.WebGLUnsupported')}
-        </p>
-      </div>
-    )
-  }
+  const message = hasModel ? initError : 'LivLiv.NoModel'
+  const loading =
+    hasModel &&
+    !initError &&
+    (!settled ||
+      settled.player !== player ||
+      settled.path !== selectedPath ||
+      settled.hideWatermark !== hideWatermark)
 
   return (
     <div
       className="relative h-full w-full"
       data-testid="livliv-stage"
       onDragOver={(event) => event.preventDefault()}
-      onDrop={handleDrop}
+      onDrop={(event) => {
+        event.preventDefault()
+        const file = event.dataTransfer.files[0]
+        if (file) void selectLocalLivLivFile(file)
+      }}
     >
       <canvas
-        key={canvasEpoch}
+        key={canvasVersion}
         ref={canvasRef}
         className="h-full w-full"
         aria-label="LivLiv"
       />
-      {!selectedPath && !loading && (
+      {message && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center">
-          <p className="max-w-md rounded-2xl bg-black/45 px-4 py-3 text-sm font-bold text-white">
-            {t('LivLiv.NoModel')}
+          <p className="max-w-md text-balance rounded-2xl bg-black/45 px-4 py-3 text-sm font-bold text-white">
+            {t(message)}
           </p>
         </div>
       )}

@@ -1,10 +1,9 @@
-# LivLiv モデルの置き場
+# LivLiv モデル
 
-このフォルダに、利用権限のある `.livliv` ファイル（または `model.json` と `textures/` を含むフォルダ）を置いてください。AITuberKit はキャラクター本体を同梱しません。
+設定画面で開いた `.livliv` やステージにドロップしたファイルは、現在のブラウザに保存されます。同名のファイルには番号が付き、以前のモデルも選べます。
 
-LivLiv Player のリポジトリには、すぐに使えるフィーチャーキャラクターが 20 体以上あります。それらは Player のコード（Apache-2.0）とは別の LivLiv Featured Characters License に従います。再配布や商用利用ができるとは限りません。利用前に、入手元のライセンスを確認してください。
+複数の端末や埋め込みページで共有するモデルは、`.livliv` ファイル、または `model.json` と `textures/` を含むフォルダとしてここに配置してから、アプリを起動してください。Cloudflare のモデル一覧には Git で追跡しているファイルが含まれます。
 
-- Player: https://github.com/livliv-dev/player
-- キャラクターの条件: https://github.com/livliv-dev/player/blob/main/characters/LICENSE.md
+`samples.json` に、透かしの切り替えを許可するサンプルのパスを JSON 配列で指定できます。例は `["/livliv/Aoi.livliv"]` です。
 
-LivLiv Player は Live2D / Cubism のファイル（`.moc3` など）を読み込みません。
+[LivLiv のキャラクター一覧](https://github.com/livliv-dev/player#featured-characters) · [利用条件](https://github.com/livliv-dev/player/blob/main/characters/LICENSE.md) · [クレジット](https://github.com/livliv-dev/player/blob/main/characters/CREDITS.md)

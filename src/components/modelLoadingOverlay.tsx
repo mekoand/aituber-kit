@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 type ModelLoadingOverlayProps = {
   className?: string
 }
@@ -5,10 +7,12 @@ type ModelLoadingOverlayProps = {
 export default function ModelLoadingOverlay({
   className = '',
 }: ModelLoadingOverlayProps) {
+  const { t } = useTranslation()
+
   return (
     <div
       className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center ${className}`}
-      aria-label="モデルを読み込み中"
+      aria-label={t('Loading')}
       role="status"
     >
       <div className="aurora-glass-bubble flex h-[76px] w-[76px] items-center justify-center rounded-full">

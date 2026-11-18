@@ -7,8 +7,7 @@ Maintainers: AITuberKit does not currently keep a single NOTICE file. This note 
 - Package: `@livliv-dev/player` (version pinned in `package.json`)
 - License: Apache License 2.0
 - Source: https://github.com/livliv-dev/player
-- The core package has no runtime dependencies. Its optional peers (`three` >= 0.170, `@pixiv/three-vrm`, `@mediapipe/tasks-vision`) belong to other entry points (`/vrm`, `/tracking`). This integration imports only `@livliv-dev/player` and does not use those entry points, so the app's existing `three` 0.167 is left as it is.
-- `npm ci` installs the committed lockfile. A fresh `npm install` (which re-resolves peers) stops on that optional `three` range. `--legacy-peer-deps` lets the install finish, and it also drops peer packages this repository previously locked (notably `webpack`, a peer of `style-loader` / `terser-webpack-plugin`). That flag was not committed, so the lockfile stays the previous tree plus this package. Maintainers can decide whether a project `.npmrc` is appropriate.
+- AITuberKit uses the dependency-free core entry point. The override for Player 0.5.1 keeps AITuberKit's existing `three` and `@pixiv/three-vrm` versions. If the integration starts using Player's `/vrm` entry point, update those dependencies to satisfy the SDK's requirements and remove the override.
 
 Upstream NOTICE, kept here because `node_modules` is not part of this repository:
 

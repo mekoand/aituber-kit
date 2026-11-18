@@ -510,6 +510,19 @@
     "LoadingModel": "लाइव2डी मॉडल लोड हो रहा है...",
     "SelectEmotions": "भावना चुनें"
   },
+  "LivLiv": {
+    "RendererInfo": "LivLiv मॉडल <player/> से रेंडर होते हैं।",
+    "FileInfo": "खोली गई फ़ाइलें इस ब्राउज़र में सेव होती हैं।",
+    "OpenModel": ".livliv फ़ाइल खोलें",
+    "ChooseModel": "मॉडल चुनें",
+    "NoModel": "मॉडल चुनें या .livliv फ़ाइल यहाँ खींचकर छोड़ें।",
+    "Characters": "LivLiv के किरदार",
+    "ShowSampleWatermark": "नमूना मॉडल पर वॉटरमार्क दिखाएँ",
+    "WebGLUnsupported": "LivLiv मॉडल दिखाने के लिए WebGL 2 ज़रूरी है।",
+    "LoadError": "LivLiv मॉडल लोड नहीं हो सका।",
+    "ImportError": ".livliv फ़ाइल नहीं खुल सकी।",
+    "ListError": "LivLiv मॉडल की सूची लोड नहीं हो सकी।"
+  },
   "PNGTuber": {
     "FileInfo": "कृपया उपयोग करने के लिए PNGTuber asset फ़ोल्डर को public/pngtuber में रखें। सुनिश्चित करें कि config.json फ़ाइल और PNG छवियां सीधे इस फ़ोल्डर में हैं।\nयदि यह विकल्पों में नहीं दिखाई देता है, तो कृपया पृष्ठ को पुनः लोड करें या जांचें कि फ़ोल्डर पथ सही है।",
     "Sensitivity": "संवेदनशीलता",

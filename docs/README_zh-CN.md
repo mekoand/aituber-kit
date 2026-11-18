@@ -103,6 +103,7 @@ AITuberKit是一个开源工具包，任何人都可以轻松构建能与AI角�
 - **3D模型**：VRM文件（支持通过运动标签控制姿势和手势）
 - **2D模型**：Live2D文件（Cubism 3及以后版本）
 - **动态PNGTuber**：基于视频的角色显示（[MotionPNGTuber](https://github.com/rotejin/MotionPNGTuber)）
+- **LivLiv 模型**（`.livliv`）由 [LivLiv Player](https://github.com/livliv-dev/player) 渲染。
 
 ### 支持的LLM
 

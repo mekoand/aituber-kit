@@ -510,6 +510,19 @@
     "LoadingModel": "Chargement du modèle Live2D...",
     "SelectEmotions": "Sélectionner les émotions"
   },
+  "LivLiv": {
+    "RendererInfo": "Le rendu des modèles LivLiv est assuré par <player/>.",
+    "FileInfo": "Les fichiers ouverts sont enregistrés dans ce navigateur.",
+    "OpenModel": "Ouvrir un fichier .livliv",
+    "ChooseModel": "Choisir un modèle",
+    "NoModel": "Choisissez un modèle ou déposez un fichier .livliv.",
+    "Characters": "Personnages LivLiv",
+    "ShowSampleWatermark": "Afficher le filigrane des exemples",
+    "WebGLUnsupported": "WebGL 2 est nécessaire pour afficher les modèles LivLiv.",
+    "LoadError": "Impossible de charger le modèle LivLiv.",
+    "ImportError": "Impossible d’ouvrir le fichier .livliv.",
+    "ListError": "Impossible de charger la liste des modèles LivLiv."
+  },
   "PNGTuber": {
     "FileInfo": "Placez le dossier d'assets PNGTuber que vous souhaitez utiliser dans public/pngtuber. Chaque dossier doit contenir les fichiers suivants :\n• *_mouthless_h264.mp4 (vidéo de fond sans bouche)\n• mouth_track.json (données de suivi de la position de la bouche)\n• dossier mouth/ (sprites de bouche : closed.png, open.png requis, half.png, e.png, u.png optionnels)",
     "Sensitivity": "Sensibilité",

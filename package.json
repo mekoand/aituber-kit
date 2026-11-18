@@ -133,6 +133,10 @@
     "npm": "^11.6.2"
   },
   "overrides": {
+    "@livliv-dev/player@0.5.1": {
+      "@pixiv/three-vrm": "$@pixiv/three-vrm",
+      "three": "$three"
+    },
     "glob": "$glob",
     "node-fetch": "^2.7.0",
     "postcss": "$postcss",

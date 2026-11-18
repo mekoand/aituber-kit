@@ -498,14 +498,6 @@ export const routePolicies = {
     secret: { kind: 'none' },
     restrictedBehavior: 'deny',
   },
-  '/api/upload-livliv-list': {
-    path: '/api/upload-livliv-list',
-    featureName: 'upload-livliv-list',
-    methods: ['POST'],
-    resources: ['fs-write'],
-    secret: { kind: 'none' },
-    restrictedBehavior: 'deny',
-  },
   '/api/upload-vrm-list': {
     path: '/api/upload-vrm-list',
     featureName: 'upload-vrm-list',

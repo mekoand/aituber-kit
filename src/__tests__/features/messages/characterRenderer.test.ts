@@ -30,17 +30,7 @@ jest.mock('@/features/pngTuber/pngTuberHandler', () => ({
   },
 }))
 
-const mockLivLivSpeak = jest.fn().mockResolvedValue(undefined)
-const mockLivLivStopSpeaking = jest.fn()
-const mockLivLivResetToIdle = jest.fn()
-jest.mock('@/features/livliv/livlivHandler', () => ({
-  LivLivHandler: {
-    speak: (...args: unknown[]) => mockLivLivSpeak(...args),
-    stopSpeaking: (...args: unknown[]) => mockLivLivStopSpeaking(...args),
-    resetToIdle: (...args: unknown[]) => mockLivLivResetToIdle(...args),
-  },
-}))
-
+import { livlivRenderer } from '@/features/livliv/livlivRuntime'
 import { getCharacterRenderer } from '@/features/messages/characterRenderer'
 import type { Talk } from '@/features/messages/messages'
 
@@ -78,19 +68,9 @@ describe('getCharacterRenderer', () => {
     expect(mockPNGResetToIdle).toHaveBeenCalled()
   })
 
-  it('dispatches to LivLivHandler when modelType is livliv', async () => {
+  it('selects the LivLiv speech renderer before a canvas is ready', () => {
     mockSettingsGetState.mockReturnValue({ modelType: 'livliv' })
-    const renderer = getCharacterRenderer()
-
-    await renderer?.speak(buffer, talk, true)
-    await renderer?.stopSpeaking()
-    await renderer?.resetToIdle()
-
-    expect(mockLivLivSpeak).toHaveBeenCalledWith(buffer, talk, true)
-    expect(mockLivLivStopSpeaking).toHaveBeenCalled()
-    expect(mockLivLivResetToIdle).toHaveBeenCalled()
-    expect(mockLive2DSpeak).not.toHaveBeenCalled()
-    expect(mockPNGSpeak).not.toHaveBeenCalled()
+    expect(getCharacterRenderer()).toBe(livlivRenderer)
   })
 
   it('dispatches to the VRM viewer model when modelType is vrm', async () => {
