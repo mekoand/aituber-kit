@@ -17,6 +17,7 @@ const Character = () => {
     selectedVrmPath,
     selectedLive2DPath,
     selectedPNGTuberPath,
+    selectedLivlivPath,
     pngTuberSensitivity,
     pngTuberChromaKeyEnabled,
     pngTuberChromaKeyColor,
@@ -74,6 +75,7 @@ const Character = () => {
           selectedVrmPath={selectedVrmPath}
           selectedLive2DPath={selectedLive2DPath}
           selectedPNGTuberPath={selectedPNGTuberPath}
+          selectedLivlivPath={selectedLivlivPath}
           pngTuberSensitivity={pngTuberSensitivity}
           pngTuberChromaKeyEnabled={pngTuberChromaKeyEnabled}
           pngTuberChromaKeyColor={pngTuberChromaKeyColor}
@@ -81,7 +83,7 @@ const Character = () => {
         />
 
         {/* Character Position Controls - VRM/Live2D only (PNGTuber uses scale/offset in viewer) */}
-        {modelType !== 'pngtuber' && (
+        {(modelType === 'vrm' || modelType === 'live2d') && (
           <CharacterPositionSection
             modelType={modelType}
             fixedCharacterPosition={fixedCharacterPosition}

@@ -58,6 +58,7 @@
       }
     }
   ],
+  "livliv": [],
   "poses": [
     { "name": "bow", "path": "/poses/bow.json" },
     { "name": "cheer", "path": "/poses/cheer.json" },

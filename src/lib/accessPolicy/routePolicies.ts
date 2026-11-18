@@ -215,6 +215,14 @@ export const routePolicies = {
     secret: { kind: 'none' },
     restrictedBehavior: 'in-route',
   },
+  '/api/get-livliv-list': {
+    path: '/api/get-livliv-list',
+    featureName: 'get-livliv-list',
+    methods: ['GET'],
+    resources: ['fs-read'],
+    secret: { kind: 'none' },
+    restrictedBehavior: 'in-route',
+  },
   '/api/get-live2d-list': {
     path: '/api/get-live2d-list',
     featureName: 'get-live2d-list',
@@ -485,6 +493,14 @@ export const routePolicies = {
   '/api/upload-image': {
     path: '/api/upload-image',
     featureName: 'upload-image',
+    methods: ['POST'],
+    resources: ['fs-write'],
+    secret: { kind: 'none' },
+    restrictedBehavior: 'deny',
+  },
+  '/api/upload-livliv-list': {
+    path: '/api/upload-livliv-list',
+    featureName: 'upload-livliv-list',
     methods: ['POST'],
     resources: ['fs-write'],
     secret: { kind: 'none' },

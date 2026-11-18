@@ -9,8 +9,9 @@ export type PlaybackObserver = {
 }
 
 /**
- * VRM / Live2D / PNGTuber の3実装が慣習のみで共有していた speak() 系メソッドの共通インターフェース。
+ * VRM / Live2D / PNGTuber / LivLiv が共有する speak() 系メソッドの共通インターフェース。
  * PNGTuberは talk.emotion / talk.motion を無視するが、型としては同じシグネチャで受け取る（対応しないだけ）。
+ * LivLiv は感情タグを setExpression に渡し、モーションタグは使わない。
  */
 export interface CharacterRenderer {
   speak(
@@ -55,6 +56,38 @@ export function getCharacterRenderer(): CharacterRenderer | null {
           : PNGTuberHandler.speak(buffer, talk, isNeedDecode),
       stopSpeaking: () => PNGTuberHandler.stopSpeaking(),
       resetToIdle: () => PNGTuberHandler.resetToIdle(),
+    }
+  }
+
+  if (ss.modelType === 'livliv') {
+    return {
+      speak: async (buffer, talk, isNeedDecode, observer) => {
+        const { LivLivHandler } =
+          await import('@/features/livliv/livlivHandler')
+        return observer
+          ? LivLivHandler.speak(buffer, talk, isNeedDecode, observer)
+          : LivLivHandler.speak(buffer, talk, isNeedDecode)
+      },
+      speakPcm16Stream: async (stream, talk, sampleRate, observer) => {
+        const { LivLivHandler } =
+          await import('@/features/livliv/livlivHandler')
+        return LivLivHandler.speakPcm16Stream(
+          stream,
+          talk,
+          sampleRate,
+          observer
+        )
+      },
+      stopSpeaking: async () => {
+        const { LivLivHandler } =
+          await import('@/features/livliv/livlivHandler')
+        LivLivHandler.stopSpeaking()
+      },
+      resetToIdle: async () => {
+        const { LivLivHandler } =
+          await import('@/features/livliv/livlivHandler')
+        LivLivHandler.resetToIdle()
+      },
     }
   }
 

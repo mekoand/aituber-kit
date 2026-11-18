@@ -592,6 +592,13 @@
       "clap": "拍手、称賛"
     }
   },
+  "LivLiv": {
+    "FileInfo": "利用権限のある .livliv を読み込めます。ファイルを選ぶか、public/livliv に置いた .livliv（または model.json があるフォルダ）を選んでください。\nLivLiv Player のリポジトリには、すぐに使えるフィーチャーキャラクターが20体以上あります。それらは Apache-2.0 とは別の LivLiv Featured Characters License に従います。このアプリには同梱しません。再配布や商用利用ができるとは限りません。\nLivLiv Player は Live2D のモデルを読み込みません。",
+    "OpenModel": ".livliv を開く",
+    "NoModel": "モデルが未選択です。利用権限のある .livliv を読み込んでください。",
+    "WebGLUnsupported": "このブラウザでは LivLiv Player（WebGL2）を表示できません。",
+    "LoadError": "LivLiv モデルを読み込めませんでした。"
+  },
   "PNGTuber": {
     "FileInfo": "使用したいPNGTuberアセットのフォルダを、public/pngtuber に配置してください。各フォルダには以下のファイルが必要です：\n・*_mouthless_h264.mp4（口なし背景動画）\n・mouth_track.json（口の位置トラッキングデータ）\n・mouth/フォルダ（口スプライト：closed.png, open.png が必須、half.png, e.png, u.png はオプション）",
     "Sensitivity": "感度",

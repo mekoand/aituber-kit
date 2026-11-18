@@ -327,6 +327,25 @@ describe('settings file export and import', () => {
     )
   })
 
+  it('accepts livliv as a model type and keeps its model path', () => {
+    const parsed = parseSettingsFile(
+      JSON.stringify({
+        format: SETTINGS_FILE_FORMAT,
+        formatVersion: SETTINGS_FILE_FORMAT_VERSION,
+        settingsVersion: CURRENT_SETTINGS_VERSION,
+        exportedAt: '2026-08-03T12:34:56.000Z',
+        secretsIncluded: false,
+        settings: {
+          modelType: 'livliv',
+          selectedLivlivPath: '/livliv/example.livliv',
+        },
+      })
+    )
+
+    expect(parsed.settings.modelType).toBe('livliv')
+    expect(parsed.settings.selectedLivlivPath).toBe('/livliv/example.livliv')
+  })
+
   it.each([
     ['selectAIService', 'not-a-service'],
     ['modelType', 'unknown'],
